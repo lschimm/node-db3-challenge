@@ -36,7 +36,11 @@ function findSteps(id) {}
 
 // inserts scheme into the dabase
 // resolves to the newly scheme
-function add(scheme) {}
+function add(scheme) {
+  return db("schemes")
+    .insert(scheme)
+    .then(ids => ({ id: ids[0] }));
+}
 
 // updates the scheme at the given id
 // resolves newly updated scheme obj
