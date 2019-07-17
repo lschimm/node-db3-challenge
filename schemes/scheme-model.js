@@ -32,7 +32,16 @@ function findById(id) {
 
 // resolves to an array of ordered steps for scheme
 // id, scheme_name, in order
-function findSteps(id) {}
+function findSteps(id) {
+  return db("steps as st") //good
+    .innerJoin("schemes as s", "s.id", "st.scheme_id") //good
+    .where({ scheme_id: id })
+    .select(
+      "st.step_number as Step",
+      "s.scheme_name as Scheme Name",
+      "st.instructions as instructions"
+    );
+}
 
 // inserts scheme into the dabase
 // resolves to the newly scheme
@@ -44,8 +53,16 @@ function add(scheme) {
 
 // updates the scheme at the given id
 // resolves newly updated scheme obj
-function update(changes, id) {}
+function update(changes, id) {
+  return db("schemes")
+    .where({ id })
+    .update(changes, "*");
+}
 
 //removes scheme obj with the given id
 // returns `null` on invalid id
-function remove(id) {}
+function remove(id) {
+  return db("schemes")
+    .where({ id })
+    .del();
+}
